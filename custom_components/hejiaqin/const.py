@@ -1,8 +1,8 @@
 """Constants for sunlogin integration."""
 
-DOMAIN = "hejiaqin"
-PACKAGE_NAME = "custom_components.hejiaqin"
-VERSION = "0.1.2"
+DOMAIN = "mhejiaqin"
+PACKAGE_NAME = "custom_components.mhejiaqin"
+VERSION = "0.1.3"
 VERSION_STORAGE = 1
 CLOUD_DATA = "cloud_data"
 
