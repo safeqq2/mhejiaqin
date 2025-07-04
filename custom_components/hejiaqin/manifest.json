@@ -1,14 +1,14 @@
 {
-    "domain": "hejiaqin",
-    "name": "HeJiaQin",
+    "domain": "mhejiaqin",
+    "name": "mhejiaqin",
     "codeowners": ["@safeqq2"],
     "config_flow": true,
     "dependencies": ["http", "network"],
-    "documentation": "https://github.com/safeqq2/hejiaqin",
+    "documentation": "https://github.com/safeqq2/mhejiaqin",
     "iot_class": "cloud_polling",
-    "issue_tracker": "https://github.com/safeqq2/hejiaqin/issues",
+    "issue_tracker": "https://github.com/safeqq2/mhejiaqin/issues",
     "requirements": [
     ],
-    "version": "0.1.2"
+    "version": "0.1.3"
 }
   
