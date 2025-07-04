@@ -3,12 +3,10 @@
     "name": "mhejiaqin",
     "codeowners": ["@safeqq2"],
     "config_flow": true,
-    "dependencies": ["http", "network"],
     "documentation": "https://github.com/safeqq2/mhejiaqin",
     "iot_class": "cloud_polling",
     "issue_tracker": "https://github.com/safeqq2/mhejiaqin/issues",
-    "requirements": [
-    ],
+    "requirements": [],
     "version": "0.1.3"
 }
   
