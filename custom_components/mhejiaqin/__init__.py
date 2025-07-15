@@ -78,12 +78,14 @@ async def async_setup(hass: HomeAssistant, config: dict):
     hass.data[DOMAIN][CONF_RELOAD_FLAG] = []
     async def _handle_set_dp(event):
         scan_interval = event.data[CONF_SCAN_INTERVAL]
-        _LOGGER.debug("scan_interval: ", scan_interval)
+        _LOGGER.debug("scan_interval: ")
+        _LOGGER.debug(scan_interval)
     return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up LocalTuya integration from a config entry."""
+    _LOGGER.debug("async_setup_entry")
     _LOGGER.debug(entry.entry_id)
     _LOGGER.debug(entry.data)
     _LOGGER.debug(hass.data[DOMAIN][CONF_RELOAD_FLAG])
@@ -115,20 +117,18 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     config = hass.data[DOMAIN][CONFIG].pop(entry.entry_id)
     for device in config[SL_DEVICES]:
         await device.update_manager.coordinator.async_shutdown()
-    unload_ok = all(
-        await hass.config_entries.async_forward_entry_unload(entry, ['switch', 'sensor'])
-    )
+    # await hass.config_entries.async_forward_entry_unload(entry, ['switch', 'sensor'])
+    await hass.config_entries.async_unload_platforms(entry, ['switch', 'sensor'])
     if entry.entry_id not in hass.data[DOMAIN][CONF_RELOAD_FLAG]:
         hass.data[DOMAIN][CONF_RELOAD_FLAG].append(entry.entry_id)
-    return unload_ok
+    return True
 
 
 
 async def async_hejiaqin_reload_entry(hass: HomeAssistant, entry: ConfigEntry):
     api_key = entry.data[CONF_USER_INPUT][CONF_API_KEY]
     error, resp, rapi_key = await async_get_devices_list(hass, api_key, None, None)
-    if error is not None:
-        pass    
+    if error is not None: pass;
     update_flag = False
     r_json = resp.json()
     devices_list = r_json.get(CONF_DEVICES, list())
@@ -142,6 +142,7 @@ async def async_hejiaqin_reload_entry(hass: HomeAssistant, entry: ConfigEntry):
         hass.config_entries.async_update_entry(entry, data=new_data)
 
     hass.data[DOMAIN][CONF_RELOAD_FLAG].remove(entry.entry_id)
+    _LOGGER.debug("async_hejiaqin_reload_entry")
     _LOGGER.debug(entry.data)
     
 

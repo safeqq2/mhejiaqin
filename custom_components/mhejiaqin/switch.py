@@ -98,30 +98,19 @@ async def async_setup_entry(
 ):
     """Setup switch from a config entry created in the integrations UI."""
     entities = []
-
     for device in hass.data[DOMAIN][CONFIG][config_entry.entry_id][SL_DEVICES]:
-
-        _LOGGER.debug(device.entities)
-
         entities_to_setup = [
             entity
             for entity in device.entities.get(ENTITY_DOMAIN, [])
         ]
-
         if entities_to_setup:
-
             for entity in entities_to_setup:
-                #_LOGGER.debug("switch_types: %s", SWITCH_TYPES.get(entity))
-                entities.append(
-                    SunLoginHaSwitch(
-                        device,
-                        entity,
-                        SWITCH_TYPES.get(entity),
-                    )
-                )
+                rentities = SunLoginHaSwitch(device, entity, SWITCH_TYPES.get(entity),)
+                entities.append(rentities)
     
     # async_add_entities(sensors, update_before_add=True)
-    _LOGGER.debug(entities)
+    _LOGGER.debug("async_setup_entry entities len: ")
+    _LOGGER.debug(len(entities))
     async_add_entities(entities)
 
 class SunLoginHaSwitch(SwitchEntity, RestoreEntity):
@@ -150,8 +139,8 @@ class SunLoginHaSwitch(SwitchEntity, RestoreEntity):
             self._attr_name = switchid
         if (remark := device.memos.get(switchid)) is not None:
             self._attr_name = remark
-
-        _LOGGER.debug("Initialized switch [%s]", self.entity_id)
+        _LOGGER.debug("SunLoginHaSwitch Initialized switch [%s]", self.entity_id)
+#        return self.entity_id
 
     @property
     def is_on(self) -> bool:

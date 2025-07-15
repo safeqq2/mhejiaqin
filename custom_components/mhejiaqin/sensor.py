@@ -64,7 +64,7 @@ SENSOR_TYPES = {
         translation_key="power_consumption",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
-        state_class=SensorStateClass.MEASUREMENT,
+        state_class=SensorStateClass.TOTAL_INCREASING,
         suggested_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         suggested_display_precision=DEFAULT_PRECISION,
     ),
@@ -123,28 +123,19 @@ async def async_setup_entry(
 ):
     """Setup switch from a config entry created in the integrations UI."""
     entities = []
-
-    for device in hass.data[DOMAIN][CONFIG][config_entry.entry_id][SL_DEVICES]:
-        
+    for device in hass.data[DOMAIN][CONFIG][config_entry.entry_id][SL_DEVICES]:        
         entities_to_setup = [
             entity
             for entity in device.entities.get(ENTITY_DOMAIN, [])
         ]
-
         if entities_to_setup:
-
             for entity in entities_to_setup:
-                #_LOGGER.debug("sensor_types:%s" ,SENSOR_TYPES.get(entity))
-                entities.append(
-                    SunLoginHaSensor(
-                        device,
-                        entity,
-                        SENSOR_TYPES.get(entity),
-                    )
-                )
+                rentities = SunLoginHaSensor(device, entity, SENSOR_TYPES.get(entity),)
+                entities.append(rentities)
     
     # async_add_entities(sensors, update_before_add=True)
-    _LOGGER.debug(entities)
+    _LOGGER.debug("async_setup_entry entities len: ")
+    _LOGGER.debug(len(entities))
     async_add_entities(entities)
 
 
@@ -173,7 +164,7 @@ class SunLoginHaSensor(SensorEntity, RestoreEntity):
             # del self._attr_has_entity_name
             del self.entity_description
             self._attr_name = sensorid
-        _LOGGER.debug("Initialized sensor [%s]", self.entity_id)
+        _LOGGER.debug("SunLoginHaSensor Initialized sensor [%s]", self.entity_id)
 
     @property
     def native_value(self):
