@@ -18,6 +18,8 @@ from homeassistant.const import (
     CONF_DEVICES,
     CONF_ENTITIES,
     CONF_SCAN_INTERVAL,
+    SL_DEVICES,
+    CONFIG,
 )
 from homeassistant.core import callback
 from .hejiaqin import async_get_devices_list
