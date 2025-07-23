@@ -192,9 +192,10 @@ class HejiaqinOptionsFlowHandler(config_entries.OptionsFlow):
 #            _LOGGER.debug(self.hass.data[DOMAIN]['configuration'])
 #            _LOGGER.debug(self.hass.data[DOMAIN]['configuration'][self.config_entry.entry_id])
 #            _LOGGER.debug(self.config_entry.entry_id)
-#            for device in self.hass.data[DOMAIN][SL_DEVICES][self.config_entry.entry_id]:
+#            for device in self.hass.data[DOMAIN][SL_DEVICES][self.config_entry.entry_id]:   
 #            tdevices = self.hass.data[DOMAIN]['configuration'][self.config_entry.entry_id]['sunlogin_devices']
-            for device in self.hass.data[DOMAIN]['configuration'][self.config_entry.entry_id]['sunlogin_devices']:
+#            for device in self.hass.data[DOMAIN]['configuration'][self.config_entry.entry_id]['sunlogin_devices']:
+            for device in self.hass.data[DOMAIN][CONFIG][self.config_entry.entry_id][SL_DEVICES]:
 #                _LOGGER.debug(device)
                 await device.async_set_scan_interval(scan_interval)            
             return self.async_create_entry(title="", data={})
