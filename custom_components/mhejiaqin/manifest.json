@@ -8,6 +8,7 @@
     "iot_class": "cloud_polling",
     "issue_tracker": "https://github.com/safeqq2/mhejiaqin/issues",
     "requirements": [],
-    "version": "0.1.3"
+    "version": "0.1.3",
+    "icon":"icon.png"
 }
   
